@@ -1,0 +1,20 @@
+// Receiving data from the Raspberry Pi
+import serial, time
+Open serial port connected to the Arduino
+
+// Send a prompt to the Arduino for data
+FUNCTION prompt(signal)
+  serial.write(signal)
+  // Prompts the Arduino to send back data
+  while True:
+    try:
+      time.sleep(0.01)
+      data = serial.readline()
+    except:
+      pass
+    time.sleep(0.1)
+    // Write Data to file
+
+// Loop through process of prompting the Arduino to send data
+while True:
+  prompt(signal)
