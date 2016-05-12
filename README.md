@@ -4,6 +4,6 @@
 
 To run the code to initiate the web server, go to the Main folder in the terminal and type in 
 
-'''bash
+```sh
 python main.py
-'''
+```
