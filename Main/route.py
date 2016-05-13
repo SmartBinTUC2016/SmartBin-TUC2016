@@ -12,16 +12,19 @@ session = {}
 @app.route('/')
 def index():
     page['title'] = 'Welcome'
-    page['paragraph'] = 'This is the page to manage and view the status of the Smart Bin.'
+    page['bins'] = '1'
+    page['users'] = str(random.randint(0,100))
     return render_template('index.html', page = page)
 
 @app.route('/capacity', methods=['POST','GET'])
 def get_capacity():
     page['title'] = 'Capacity'
     level = random.randint(0,100)
-    page['level'] = str(level) + "%"
-    if level > 80:
-        page['status'] = 'Full, needs emptying'
+    page['level'] = str(level)
+    page['weight'] = str(random.randint(0,10)) + 'kg'
+    page['distance'] = str(random.randint(0,50)) + 'cm'
+    if level > 90:
+        page['status'] = 'FULL'
     else:
         page['status'] = 'OK'
     return render_template('capacity.html', page = page)

@@ -1,40 +1,84 @@
 {% include 'top.html' %}
-        <div class="page-header">
-        <h1>{{ page.title }}</h1>
-        </div>
-        <div class="row">
-           <div class="col-md-1">
-                <button type = "button" class = "btn btn-primary" id="btn_refresh" onclick="window.location.reload()">Refresh</button>
+            <div class="page-header">
+            <h1>{{ page.title }}</h1>
             </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title">Bin Level</h1>
-                </div>
-                <div class="panel-body">
-                    <center>
-                        <h2>{{ page.level }}</h2>
-                    </center>
+            <div class="row">
+               <div class="col-md-1">
+                    <button type = "button" class = "btn btn-primary" id="btn_refresh" onclick="window.location.reload()">Refresh</button>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Status</h1>
-                    </div>
-                    <div class="panel-body">
-                        <center>
-                            <h2>{{ page.status }}</h2>  
-                        </center>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Bin Level</h1>
+                        </div>
+                        <div class="panel-body">
+                         <center>
+                          <div style="margin: 0 auto;">
+                               <div id="binlevel" class="c100 ">
+                                  <span>{{ page.level }}</span>
+                                  <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                  </div>
+                                </div>
+                            </div>
+                            </center>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Status</h1>
+                        </div>
+                        <div class="panel-body">
+                            <center>
+                                <h2 id="status">{{ page.status }}</h2>  
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Weight</h1>
+                        </div>
+                        <div class="panel-body">
+                            <center>
+                                <h2>{{ page.weight }}</h2>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Distance From Lid</h1>
+                        </div>
+                        <div class="panel-body">
+                            <center>
+                                <h2>{{ page.distance }}</h2>
+                            </center>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
+        <script>
+            window.onload = function() {
+                document.getElementById("binlevel").className += "p" + {{page.level}};
+                var status = document.getElementById("status");
+                if (status.innerHTML == "FULL") {
+                    status.style.color = "tomato";
+                } else if (status.innerHTML == "OK") {
+                    status.style.color = "yellowgreen";
+                }
+            }
+        </script>
     </body>
 </html>

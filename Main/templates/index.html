@@ -2,12 +2,30 @@
             <div class="page-header">
                 <h1>{{ page.title }}</h1>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title">About</h1>
+            <div class="row">
+               <div class="col-sm-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Bins</h1>
+                        </div>
+                        <div class="panel-body">
+                           <center>
+                                <h2>{{ page.bins }}</h2>
+                           </center>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <h2>{{ page.paragraph }}</h2>
+                <div class="col-sm-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Users</h1>
+                        </div>
+                        <div class="panel-body">
+                            <center>
+                                <h2>{{ page.users }}</h2>
+                            </center>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
