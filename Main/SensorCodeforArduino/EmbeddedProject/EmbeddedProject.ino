@@ -11,7 +11,7 @@ float rfill;
 float right;
 float left;
 int motion;
-// twelve servo objects can be created on most boards
+int user;
 
 typedef enum {RIGHT, UP, DOWN, LEFT, SELECT, NOTHING} button;
 char btn[] = "SELECT";
