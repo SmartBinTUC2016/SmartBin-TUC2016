@@ -47,13 +47,13 @@ void setup() {
 
   lcd.begin(16, 2);
   pinMode(10,OUTPUT);
-  analogWrite(10,10);
+  analogWrite(10,100);
   close();
   calibrate();
 }
 
 void loop() {
-  raw = ((raw+offset)*.9+.1*analogRead(11)-offset);
+  raw = ((raw+offset)*.8+.2*analogRead(11)-offset);
   weight = raw *171/27;
   if(weight <0) weight = 0;
   motion = .5*motion + .5*readDistance(motionTrig,motionEcho)/58;
@@ -70,10 +70,11 @@ void loop() {
   
     if (motion<20 && pos == 0) {
       open();
+      updateScore();
     }
-//    else if (motion >20 && pos > 0){
-//      close();
-//    } 
+    else if (motion >20 && pos > 0){
+      close();
+    } 
   
     lcd.clear();
     lcd.setCursor(0,0);
@@ -171,4 +172,7 @@ void calibrate() {
     Serial.println(raverage);
 }
 
+void updateScore() {
+
+}
 
