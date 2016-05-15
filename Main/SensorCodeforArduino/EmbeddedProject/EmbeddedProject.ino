@@ -1,8 +1,16 @@
 #include <Servo.h>
 #include <LiquidCrystal.h>
 Servo myservo;  // create servo object to control a servo
-int weight = 0;
-int raw = 0;
+float weight;
+float raw;
+float offset;
+float laverage;
+float raverage;
+float lfill;
+float rfill;
+float right;
+float left;
+int motion;
 // twelve servo objects can be created on most boards
 
 typedef enum {RIGHT, UP, DOWN, LEFT, SELECT, NOTHING} button;
@@ -40,44 +48,48 @@ void setup() {
   lcd.begin(16, 2);
   pinMode(10,OUTPUT);
   analogWrite(10,10);
+  close();
+  calibrate();
 }
 
 void loop() {
-
-
-  raw = raw*0.7 + (0.3*analogRead(11));
-  weight = ((raw-272)*171/26);
+  raw = ((raw+offset)*.9+.1*analogRead(11)-offset);
+  weight = raw *171/27;
+  if(weight <0) weight = 0;
+  motion = .5*motion + .5*readDistance(motionTrig,motionEcho)/58;
+  right = .9*right + .1*(readDistance(rightTrig,rightEcho)/58);
+  delay(100);
   
+  left = .9*left + .1*readDistance(leftTrig,leftEcho)/58;
+  rfill = (raverage-right-2)/(raverage-2) * 100.0;
+  lfill = (laverage-left-2)/(laverage-2) * 100.0;
 
-  long motion = readDistance(motionTrig,motionEcho) / 58;
-  long right = readDistance(rightTrig,rightEcho) / 58;
-  delay(300);
-  long left = readDistance(leftTrig,leftEcho) / 58;
-
-  Serial.println(weight);
+    if(rfill <0) rfill = 0;
+    if(lfill <0) lfill = 0;
   pressed = btnpressed();
   
     if (motion<20 && pos == 0) {
       open();
     }
-    else if (motion >20 && pos == 180){
-      close();
-    } 
+//    else if (motion >20 && pos > 0){
+//      close();
+//    } 
   
     lcd.clear();
     lcd.setCursor(0,0);
-    lcd.print("w: ");
-    lcd.print(weight);
-    lcd.setCursor(9,1);
-    lcd.print("m: ");
+    lcd.print("W: ");
+    lcd.print((int)weight);
+    lcd.setCursor(8,0);
+    lcd.print("M: ");
     lcd.print(motion);
     lcd.setCursor(0,1);
-    lcd.print("l: ");
-    lcd.print(left);
-
-    lcd.setCursor(9,0);
-    lcd.print("r: ");
-    lcd.print(right);
+    lcd.print("L: ");
+    lcd.print((int)lfill);
+    lcd.print("%");
+    lcd.setCursor(8,1);
+    lcd.print("R: ");
+    lcd.print((int)rfill);
+    lcd.print("%");
 }
 
 long readDistance(int trig, int echo) {
@@ -99,9 +111,9 @@ long readDistance(int trig, int echo) {
 }
 
 void open() {
-  pos = 180;
+  pos = 140;
   myservo.write(pos);           
-  delay(10);
+  delay(3000);
 }
 
 void close() {
@@ -142,6 +154,21 @@ else if (x < 50) {
  
 }
   
-
+void calibrate() {
+    delay(500);
+    int terms = 50;
+    for (int i = 1; i <= terms; i++) {
+    offset += analogRead(11);
+    laverage += readDistance(leftTrig,leftEcho)/58;
+    raverage += readDistance(rightTrig,rightEcho)/58;
+    delay(100);
+    }
+    offset /= terms;
+    laverage /= terms;
+    raverage /= terms;
+    Serial.println(offset);
+    Serial.println(laverage);
+    Serial.println(raverage);
+}
 
 
