@@ -18,7 +18,7 @@
                          <center>
                           <div style="margin: 0 auto;">
                                <div id="binlevel" class="c100 ">
-                                  <span>{{ page.level }}</span>
+                                  <span>{{ page.level }} %</span>
                                   <div class="slice">
                                     <div class="bar"></div>
                                     <div class="fill"></div>
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h1 class="panel-title">Status</h1>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="panel-body">
                             <center>
-                                <h2>{{ page.weight }}</h2>
+                                <h2>{{ page.weight }} kg</h2>
                             </center>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="panel-body">
                             <center>
-                                <h2>{{ page.distance }}</h2>
+                                <h2>{{ page.distance }} cm</h2>
                             </center>
                         </div>
                     </div>
@@ -72,11 +72,15 @@
         <script>
             window.onload = function() {
                 document.getElementById("binlevel").className += "p" + {{page.level}};
+                
                 var status = document.getElementById("status");
                 if (status.innerHTML == "FULL") {
                     status.style.color = "tomato";
+                    alert("Bin needs emptying");
                 } else if (status.innerHTML == "OK") {
                     status.style.color = "yellowgreen";
+                } else if (status.innerHTML == "Connection error") {
+                    status.style.color = "Gray";
                 }
             }
         </script>
