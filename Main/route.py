@@ -1,6 +1,6 @@
 from flask import *
-import comms
 import database
+import comms
 import random
 import json
 import urllib2

@@ -76,26 +76,25 @@ UPDATE USER
 '''
 def updateUser():
     sessionUser = None
-    while (True):
-        res = comms.get_data()
-        tempUser = res['user']
+    res = comms.get_data()
+    tempUser = res['user']
 
-        if sessionUser != tempUser:
-            sessionUser = tempUser
-            conn = database_connect()
-            if conn is None:
-                print 'No Connection'
-                return
-            cur = conn.cursor()
-            try:
-                query = 'UPDATE smartbin.user SET rubbishcount = rubbishcount + 1 WHERE user_id = %s;'
-                cur.execute(query, (sessionUser,))
-                conn.commit()
-                cur.close()
-                conn.close()
-            except Exception as e:
-                print e
+    if sessionUser != tempUser:
+        sessionUser = tempUser
+        conn = database_connect()
+        if conn is None:
+            print 'No Connection'
+            return
+        cur = conn.cursor()
+        try:
+            query = 'UPDATE smartbin.user SET rubbishcount = rubbishcount + 1 WHERE user_id = %s;'
+            cur.execute(query, (sessionUser,))
+            conn.commit()
             cur.close()
             conn.close()
-        time.sleep(3)
-    return
+        except Exception as e:
+            print e
+        cur.close()
+        conn.close()
+    time.sleep(3)
+    return None
