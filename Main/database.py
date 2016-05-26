@@ -7,7 +7,7 @@ import time
 #####################################################
 ##  Database Connect
 #####################################################
-
+sessionUser = None
 def database_connect():
     # Read the config file
     config = ConfigParser.ConfigParser()
@@ -74,11 +74,9 @@ def get_num_users():
 '''
 UPDATE USER
 '''
-def updateUser():
-    sessionUser = None
-    res = comms.get_data()
-    tempUser = res['user']
-
+def updateUser(user):
+    tempUser = user
+    global sessionUser
     if sessionUser != tempUser:
         sessionUser = tempUser
         conn = database_connect()
@@ -96,5 +94,4 @@ def updateUser():
             print e
         cur.close()
         conn.close()
-    time.sleep(3)
     return None

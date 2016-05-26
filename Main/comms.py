@@ -4,26 +4,24 @@ import time
 import database
 import route
 
-data = {}
+# data = {}
 def jsonListener():
     while(True):
-        request_data()
-        time.sleep(1)
-        database.updateUser()
-        time.sleep(1)
+        # request_data()
+        res = request_data()
+        database.updateUser(res['user'])
+
 
 def request_data():
     res = {}
     try:
-        request = urllib2.urlopen('http://127.0.0.1:6000', timeout=5)
+        request = urllib2.urlopen('http://127.0.0.1:6000', timeout=1)
         res = json.loads(request.read())
     except Exception  as e:
         print e
         res['level'] = '?'
         res['weight'] = '?'
         res['user'] = '?'
-    global data
-    data = res
     return res
 
 

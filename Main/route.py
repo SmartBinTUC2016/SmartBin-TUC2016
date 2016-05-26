@@ -23,7 +23,7 @@ def index():
 def get_capacity():
     # if urllib2.Request.get_method == 'GET':
     res = comms.get_data()
-    print res
+    # print res
 
     page['title'] = 'Capacity'
     if res['level'] != '?':
