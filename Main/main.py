@@ -11,7 +11,7 @@ def main():
     page = {'title' : 'IOT Trash Can'}
     datalistener = Process(target=jsonListener,args=())
     datalistener.start()
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
     datalistener.join()
 
 if __name__ == "__main__":

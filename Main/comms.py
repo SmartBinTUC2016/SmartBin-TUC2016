@@ -15,7 +15,7 @@ def jsonListener():
 def request_data():
     res = {}
     try:
-        request = urllib2.urlopen('http://127.0.0.1:6000', timeout=1)
+        request = urllib2.urlopen('http://192.168.1.49:80', timeout=5)
         res = json.loads(request.read())
     except Exception  as e:
         print e

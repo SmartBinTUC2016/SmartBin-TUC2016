@@ -90,6 +90,7 @@ def updateUser(user):
             conn.commit()
             cur.close()
             conn.close()
+            return
         except Exception as e:
             print e
         cur.close()
