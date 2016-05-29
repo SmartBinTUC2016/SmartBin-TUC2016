@@ -35,7 +35,7 @@ def get_users():
         print 'No Connection'
         return
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    query = 'SELECT * FROM smartbin.user ORDER BY user_id'
+    query = 'SELECT * FROM smartbin.user ORDER BY rubbishcount'
 
     try:
         cur.execute(query)
