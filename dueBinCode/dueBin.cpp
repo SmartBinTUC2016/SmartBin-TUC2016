@@ -1,4 +1,4 @@
-//THIS IS DUE BIN CODE!!!
+//DUE BIN CODE, handles sensors and lcd display
 #include <Servo.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
@@ -43,7 +43,7 @@ const int servo = 52;
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
-//TWI request event handler
+//I2C request event handler
 void requestEvent(){
   Wire.write((int)weight/6);
   Wire.write((int)fill);
@@ -87,6 +87,7 @@ delay(100);
 void printUser() {
   lcd.clear();
   lcd.setCursor(0,0);
+  //Names of users on LCD
   switch (userselected) {
     case 1 :
     lcd.print("1: friendyninja");
@@ -163,6 +164,8 @@ void open() {
   delay(1000);
   lcd.clear();
   lcd.setCursor(0, 0);
+
+  //Provides wifi password on LCD
   lcd.print("PASSWORD:");
   lcd.setCursor(0, 1);
   lcd.print("24409193");
@@ -180,7 +183,7 @@ void close() {
   delay(10);
 }
 
-//Calibrates
+//Calibrates sensors
 void calibrate() {
     delay(500);
     int terms = 50;
@@ -202,6 +205,9 @@ void calibrate() {
 void setup() {
   // initialize serial communication:
   Serial.begin(9600);
+  Serial1.begin(9600);
+
+  //Initalizes I2C interface
   Wire.begin(I2CAddress);
   Wire.onRequest(requestEvent);
   pinMode(motionTrig, OUTPUT);
@@ -218,11 +224,17 @@ void setup() {
 }
 
 void loop() {
+
+  //Smoothing of weight and level sensor values
   raw = ((raw+offset)*.8+.2*analogRead(11)-offset);
   weight = raw *171/27;
   if(weight <0) weight = 0;
   motion = .2*motion + .8*readDistance(motionTrig,motionEcho)/58;
   right = .9*right + .1*(readDistance(rightTrig,rightEcho)/58);
+
+  //Sends weight over serial as 2 bytes
+  Serial1.write((int)weight / 256);
+  Serial1.write((int)weight % 256);
   delay(500);
 
   left = .9*left + .1*readDistance(leftTrig,leftEcho)/58;
@@ -240,6 +252,8 @@ void loop() {
     else if (motion >20 && pos > 0){
       close();
     }
+
+    //Sets position and text on LCD display
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("W: ");

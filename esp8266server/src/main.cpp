@@ -9,6 +9,9 @@
 #include <ESP8266WebServer.h>
 #include <Wire.h>
 #define I2CAddress 8
+#define levelNum 1
+#define userNum 2
+
 
 
 String webString = "";
@@ -40,18 +43,24 @@ void getDistance(){
     buff[i]=Wire.read();
   }
 
-  //Check to make sure weight sensor value is within a good range
-  if(buff[1]<100 && buff[1]>=0){
-    rawLevel=buff[1];
+  //Check to make sure level sensor value is within a good range
+  if(buff[levelNum]<100 && buff[levelNum]>=0){
+    rawLevel=buff[levelNum];
   }
-  rawWeight=buff[0];
+
+  //Reads weight over serial as a two byte value
+  byte b1 = Serial.read();
+  byte b2 = Serial.read();
+
+
+  rawWeight = b1 * 256 + b2;
 
   /*Users are numbered from 1 to 4 however this vlaue
   is multiplied by 10 when sent from the due. This is
   done to reduce effect of random data in I2c interface.
   */
 
-  switch (buff[2]){
+  switch (buff[userNum]){
     case 0:
       user=0;
       break;
@@ -79,6 +88,7 @@ void setup() {
 
   Serial.begin(9600);
 
+  //Initalizies I2C interface
   Wire.pins(SDA,SCL);//TWI for sensor
   Wire.begin(SDA,SCL);
 
@@ -109,18 +119,13 @@ void loop(){
   //Smoothing function for level and weight
   level=(0.8*level)+(0.2*rawLevel);
 
-  weight=(0.8*weight)+(0.2*rawWeight);
 
+  //Removes spikes larger than 5000g in weight
+  if(rawWeight<5000){
+    weight=rawWeight;
+  }
 
-  // if(rawDistance<100){
-  //   distance=rawDistance;
-  // }
-
-
-
-  // Serial.println("Distance:");
-  // Serial.println(distance);
-
+  //Prints weight,level and user to serial port
   Serial.print("Weight:");
   Serial.println(weight);
   Serial.print("Level:");
@@ -141,17 +146,7 @@ void loop(){
 
 
   client.println();
-  // client.println("<!DOCTYPE html>");
-  // client.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
-  // client.println("<head>\n<meta charset='UTF-8'>");
-  // client.println("<title>ESP8266 Distance Sensor</title>");
-  // client.println("</head>\n<body>");
-  // client.println("<H2>ESP8266 & HC-SR04 Sensor</H2>");
-  // client.println("<H3>Distance </H3>");
-  // client.println("<pre>");
-  //
-  // client.print("Distance (cm)  : ");
-  // client.println((int)distance);
+
 
   //JSON Data written to webserver
   client.print("{\"level\":");
@@ -167,6 +162,6 @@ void loop(){
 
 
 
-  delay(1000);
+  delay(500);
 
 }
