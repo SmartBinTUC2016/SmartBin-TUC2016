@@ -9,6 +9,7 @@
             </div>
             <br />
             <div class="row">
+                <!-- Total Bin Level -->
                 <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -17,7 +18,7 @@
                         <div class="panel-body text-center">
                             <div style="margin: 0 auto; width: 120px;">
                                <div id="binlevel" class="c100 ">
-                                  <span>{{ page.level }} %</span>
+                                  <span>{{ page.capacity }} %</span>
                                   <div class="slice">
                                     <div class="bar"></div>
                                     <div class="fill"></div>
@@ -27,6 +28,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Status Panel -->
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -34,13 +36,14 @@
                         </div>
                         <div class="panel-body">
                             <center>
-                                <h2 id="status">{{ page.status }}</h2>  
+                                <h2 id="status">{{ page.status }}</h2>
                             </center>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
+                <!-- Weight Panel -->
                 <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -48,19 +51,20 @@
                         </div>
                         <div class="panel-body">
                             <center>
-                                <h2>{{ page.weight }} kg</h2>
+                                <h2>{{ page.weight }} g</h2>
                             </center>
                         </div>
                     </div>
                 </div>
+                <!-- Fill Level Panel -->
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Distance From Lid</h1>
+                            <h1 class="panel-title">Fill Level</h1>
                         </div>
                         <div class="panel-body">
                             <center>
-                                <h2>{{ page.distance }} cm</h2>
+                                <h2>{{ page.level }} %</h2>
                             </center>
                         </div>
                     </div>
@@ -68,9 +72,11 @@
             </div>
         </div>
         <script>
+            // Status Color coding and capacity gauge
             window.onload = function() {
-                document.getElementById("binlevel").className += "p" + {{page.level}};
-                
+                document.getElementById("binlevel").className += "p" + {{page.capacity}}; // Capacity gauge
+
+                // checks status and color codes the text
                 var status = document.getElementById("status");
                 if (status.innerHTML == "FULL") {
                     status.style.color = "tomato";
