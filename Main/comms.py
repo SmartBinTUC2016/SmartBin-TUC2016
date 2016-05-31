@@ -5,13 +5,19 @@ import database
 import route
 
 # data = {}
+'''
+Background Process to listen for data sent from Wifi Module
+'''
 def jsonListener():
     while(True):
         # request_data()
         res = request_data()
         database.updateUser(res['user'])
 
-
+'''
+Requests data from Wifi Module,
+data is in JSON format
+'''
 def request_data():
     res = {}
     try:
@@ -24,7 +30,9 @@ def request_data():
         res['user'] = '?'
     return res
 
-
+'''
+Returns requested data from Wifi Module
+'''
 def get_data():
     # data['level'] = '?'
     # data['weight'] = '?'

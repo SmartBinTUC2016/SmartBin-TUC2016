@@ -9,6 +9,7 @@
             </div>
             <br />
             <div class="row">
+                <!-- Total Bin Level -->
                 <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -27,6 +28,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Status Panel -->
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -41,6 +43,7 @@
                 </div>
             </div>
             <div class="row">
+                <!-- Weight Panel -->
                 <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -53,6 +56,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Fill Level Panel -->
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -68,9 +72,11 @@
             </div>
         </div>
         <script>
+            // Status Color coding and capacity gauge
             window.onload = function() {
-                document.getElementById("binlevel").className += "p" + {{page.capacity}};
+                document.getElementById("binlevel").className += "p" + {{page.capacity}}; // Capacity gauge
 
+                // checks status and color codes the text
                 var status = document.getElementById("status");
                 if (status.innerHTML == "FULL") {
                     status.style.color = "tomato";

@@ -7,10 +7,9 @@ import time
 
 
 def main():
-    # server_ip = raw_input('Enter server ip address: ')
     page = {'title' : 'IOT Trash Can'}
-    datalistener = Process(target=jsonListener,args=())
-    datalistener.start()
+    datalistener = Process(target=jsonListener,args=()) # Declare background process
+    datalistener.start() # Start process
     app.run(host='0.0.0.0', port=8080, debug=True)
     datalistener.join()
 

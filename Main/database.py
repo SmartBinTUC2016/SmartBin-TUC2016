@@ -29,19 +29,24 @@ def database_connect():
     #return the connection to use
     return connection
 
+'''
+Get Users
+'''
 def get_users():
+    # Establish connection to the database
     conn = database_connect()
-    if conn is None:
+    if conn is None: # Check if a connection was returned
         print 'No Connection'
         return
+    # Declare database cursor
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    query = 'SELECT * FROM smartbin.user ORDER BY rubbishcount'
+    query = 'SELECT * FROM smartbin.user ORDER BY rubbishcount desc, user_id asc;'
 
     try:
-        cur.execute(query)
-        res = cur.fetchall()
-        cur.close
-        conn.close
+        cur.execute(query) # Execute query
+        res = cur.fetchall() # Fetch all results from database
+        cur.close()
+        conn.close()
         return res
     except Exception as e:
         print e
@@ -50,7 +55,7 @@ def get_users():
     return None
 
 '''
-GET NUMBER OF USERS
+Get number of users
 '''
 def get_num_users():
     conn = database_connect()
@@ -71,8 +76,9 @@ def get_num_users():
     cur.close()
     conn.close()
     return None
+
 '''
-UPDATE USER
+Update User
 '''
 def updateUser(user):
     tempUser = user

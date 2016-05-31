@@ -4,8 +4,9 @@
             </div>
 
             <table class="table">
-                <thead><tr><th>Id</th><th>Name</th><th>Email</th><th>Rubbish Count</th><th>Member Since</th></tr></thead>
+                <thead><tr><th>Id</th><th>Name</th><th>Email</th><th>Rubbish Points</th><th>Member Since</th></tr></thead>
                 <tbody>
+                    <!-- Table to display users -->
                     {% for user in users %}
                     <tr>
                         <td>{{ user['user_id'] }}</td>
