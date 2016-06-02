@@ -23,9 +23,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.       #
 #########################################################################
 
+# Standard Libaries from Python Software Foundation
 import urllib2
 import json
 import time
+# Own modules
 import database
 import route
 

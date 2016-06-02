@@ -23,15 +23,16 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.       #
 #########################################################################
 
+# Library from Daniele Varrazzo
 import psycopg2
 import psycopg2.extras
+# Standard Library from Python Software Foundation
 import ConfigParser
+# Own modules
 import comms
 import time
 
-#####################################################
-##  Database Connect
-#####################################################
+# Database Connect
 sessionUser = None
 def database_connect():
     # Read the config file

@@ -23,10 +23,13 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.       #
 #########################################################################
 
+# Library from Armin Ronacher
 from flask import *
+# Own modules
 import database
 import comms
 import random
+# Standard Libraries from Python Software Foundation
 import json
 import urllib2
 
