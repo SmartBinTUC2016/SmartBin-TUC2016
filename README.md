@@ -1,4 +1,4 @@
-# Telstra University Challenge
+# Telstra University Challenge: __Smart Bin__
 
 # Requirements
 The program is written in Python 2 and requires
