@@ -2,8 +2,8 @@
 
 # Requirements
 The following libraries are required for the web app to function:
- * Flask
- * Psycopg2
+* Flask
+* Psycopg2
 
 ## Instructions
 
